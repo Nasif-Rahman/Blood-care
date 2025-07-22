@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../services/firebase";
 
@@ -10,38 +10,39 @@ interface Donor {
   phone: string;
 }
 
-const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-
 const SearchDonor = () => {
   const [donors, setDonors] = useState<Donor[]>([]);
-  const [searchGroup, setSearchGroup] = useState("");
-  const [searchDistrict, setSearchDistrict] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [district, setDistrict] = useState("");
 
   const fetchDonors = async () => {
-    let donorsQuery = collection(db, "donors");
+    const donorsRef = collection(db, "donors");
+    let donorQuery = donorsRef;
 
-    let q = donorsQuery;
-    if (searchGroup && searchDistrict) {
-      q = query(donorsQuery,
-        where("bloodGroup", "==", searchGroup),
-        where("district", "==", searchDistrict)
+    // Dynamically build query based on search fields
+    if (bloodGroup && district) {
+      donorQuery = query(
+        donorsRef,
+        where("bloodGroup", "==", bloodGroup),
+        where("district", "==", district)
       );
-    } else if (searchGroup) {
-      q = query(donorsQuery, where("bloodGroup", "==", searchGroup));
-    } else if (searchDistrict) {
-      q = query(donorsQuery, where("district", "==", searchDistrict));
+    } else if (bloodGroup) {
+      donorQuery = query(donorsRef, where("bloodGroup", "==", bloodGroup));
+    } else if (district) {
+      donorQuery = query(donorsRef, where("district", "==", district));
     }
 
-    const snapshot = await getDocs(q);
+    const snapshot = await getDocs(donorQuery);
     const donorList: Donor[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Donor[];
+
     setDonors(donorList);
   };
 
   useEffect(() => {
-    fetchDonors();
+    fetchDonors(); // Optional: load all donors initially
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -52,27 +53,23 @@ const SearchDonor = () => {
   return (
     <div className="section">
       <div className="card">
-        <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Search Donors</h2>
+        <h2 className="text-2xl font-bold text-center text-red-600 mb-6">
+          Search Donors
+        </h2>
 
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 mb-6">
-          <select
-            value={searchGroup}
-            onChange={(e) => setSearchGroup(e.target.value)}
+          <input
+            type="text"
+            placeholder="Blood Group (e.g. A+, O-)"
+            value={bloodGroup}
+            onChange={(e) => setBloodGroup(e.target.value)}
             className="input"
-          >
-            <option value="">Select Blood Group</option>
-            {bloodGroups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-          </select>
-
+          />
           <input
             type="text"
             placeholder="District"
-            value={searchDistrict}
-            onChange={(e) => setSearchDistrict(e.target.value)}
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
             className="input"
           />
           <button type="submit" className="btn">
