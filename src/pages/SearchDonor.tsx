@@ -1,5 +1,12 @@
-import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  type Query,
+  type DocumentData,
+} from "firebase/firestore";
 import { db } from "../services/firebase";
 
 interface Donor {
@@ -17,9 +24,8 @@ const SearchDonor = () => {
 
   const fetchDonors = async () => {
     const donorsRef = collection(db, "donors");
-    let donorQuery = donorsRef;
+    let donorQuery: Query<DocumentData> = donorsRef;
 
-    // Dynamically build query based on search fields
     if (bloodGroup && district) {
       donorQuery = query(
         donorsRef,
@@ -33,7 +39,7 @@ const SearchDonor = () => {
     }
 
     const snapshot = await getDocs(donorQuery);
-    const donorList: Donor[] = snapshot.docs.map((doc) => ({
+    const donorList = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Donor[];
@@ -42,7 +48,7 @@ const SearchDonor = () => {
   };
 
   useEffect(() => {
-    fetchDonors(); // Optional: load all donors initially
+    fetchDonors();
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -57,19 +63,22 @@ const SearchDonor = () => {
           Search Donors
         </h2>
 
-        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 mb-6">
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col sm:flex-row gap-4 mb-6"
+        >
           <input
             type="text"
             placeholder="Blood Group (e.g. A+, O-)"
             value={bloodGroup}
-            onChange={(e) => setBloodGroup(e.target.value)}
+            onChange={(e) => setBloodGroup(e.target.value.trim())}
             className="input"
           />
           <input
             type="text"
             placeholder="District"
             value={district}
-            onChange={(e) => setDistrict(e.target.value)}
+            onChange={(e) => setDistrict(e.target.value.trim())}
             className="input"
           />
           <button type="submit" className="btn">
@@ -84,10 +93,18 @@ const SearchDonor = () => {
                 key={donor.id}
                 className="bg-white shadow rounded-lg p-4 border border-gray-200"
               >
-                <p><strong>Name:</strong> {donor.name}</p>
-                <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
-                <p><strong>District:</strong> {donor.district}</p>
-                <p><strong>Phone:</strong> {donor.phone}</p>
+                <p>
+                  <strong>Name:</strong> {donor.name}
+                </p>
+                <p>
+                  <strong>Blood Group:</strong> {donor.bloodGroup}
+                </p>
+                <p>
+                  <strong>District:</strong> {donor.district}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {donor.phone}
+                </p>
               </li>
             ))}
           </ul>
