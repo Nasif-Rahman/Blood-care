@@ -32,9 +32,9 @@ const Home = () => {
         </div>
 
         {/* Image */}
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <img
-            src="https://img.freepik.com/free-vector/urgent-blood-donation-concept-illustration_52683-55843.jpg"
+            src="https://img.graphicsurf.com/2020/08/blood-donation-vector-illustration.webp"
             alt="Blood Donation"
             className="w-full max-w-md rounded-xl shadow-lg"
           />

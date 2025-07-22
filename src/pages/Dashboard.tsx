@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
 
 type Donor = {
   id: string;
   name: string;
   bloodGroup: string;
-  district: string;
+  upazila: string;
+  village: string;
+  donationDate?: string;
   phone: string;
 };
 
@@ -14,16 +16,23 @@ const Dashboard = () => {
   const [donors, setDonors] = useState<Donor[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch donors from Firestore
   const fetchDonors = async () => {
     setLoading(true);
     try {
       const colRef = collection(db, "donors");
       const snapshot = await getDocs(colRef);
-      const donorList: Donor[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<Donor, "id">),
-      }));
+      const donorList: Donor[] = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name,
+          bloodGroup: data.bloodGroup,
+          upazila: data.Upazila || "N/A",
+          village: data.Village || "N/A",
+          donationDate: data.donationDate || null,
+          phone: data.phone,
+        };
+      });
       setDonors(donorList);
     } catch (error) {
       console.error("Failed to fetch donors:", error);
@@ -35,19 +44,6 @@ const Dashboard = () => {
   useEffect(() => {
     fetchDonors();
   }, []);
-
-  // Optional: Delete donor by id
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this donor?")) return;
-
-    try {
-      await deleteDoc(doc(db, "donors", id));
-      setDonors((prev) => prev.filter((donor) => donor.id !== id));
-    } catch (error) {
-      alert("Failed to delete donor");
-      console.error(error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -64,27 +60,25 @@ const Dashboard = () => {
               <tr>
                 <th className="py-3 px-6 text-left">Name</th>
                 <th className="py-3 px-6 text-left">Blood Group</th>
-                <th className="py-3 px-6 text-left">District</th>
+                <th className="py-3 px-6 text-left">Upazila</th>
+                <th className="py-3 px-6 text-left">Village</th>
+                <th className="py-3 px-6 text-left">Last Donation</th>
                 <th className="py-3 px-6 text-left">Phone</th>
-                <th className="py-3 px-6 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {donors.map(({ id, name, bloodGroup, district, phone }) => (
+              {donors.map(({ id, name, bloodGroup, upazila, village, donationDate, phone }) => (
                 <tr key={id} className="border-b border-gray-200 hover:bg-gray-100 transition">
                   <td className="py-3 px-6">{name}</td>
                   <td className="py-3 px-6">{bloodGroup}</td>
-                  <td className="py-3 px-6">{district}</td>
-                  <td className="py-3 px-6">{phone}</td>
-                  <td className="py-3 px-6 text-center">
-                    <button
-                      onClick={() => handleDelete(id)}
-                      className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
-                      title="Delete donor"
-                    >
-                      Delete
-                    </button>
+                  <td className="py-3 px-6">{upazila}</td>
+                  <td className="py-3 px-6">{village}</td>
+                  <td className="py-3 px-6">
+                    {donationDate
+                      ? new Date(donationDate).toLocaleDateString()
+                      : "N/A"}
                   </td>
+                  <td className="py-3 px-6">{phone}</td>
                 </tr>
               ))}
             </tbody>
