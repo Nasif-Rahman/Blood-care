@@ -19,7 +19,7 @@ const Navbar = () => {
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="text-2xl font-bold text-red-600 select-none">
-          🩸 BloodCare
+           BloodCare
         </Link>
 
         {/* Desktop menu */}
