@@ -19,7 +19,7 @@ const Navbar = () => {
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="text-2xl font-bold text-red-600 select-none">
-           BloodCare
+          BloodCare
         </Link>
 
         {/* Desktop menu */}
@@ -38,7 +38,37 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile menu button */}
-       
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          {menuOpen ? (
+            // X icon
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            // Hamburger icon
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Mobile menu items */}
