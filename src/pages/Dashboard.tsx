@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
+import { FaTint, FaMapMarkerAlt, FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
 
 type Donor = {
   id: string;
@@ -46,43 +47,52 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-3xl font-bold text-red-600 mb-6 text-center">Donor Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white py-10 px-4">
+      <h1 className="text-4xl font-extrabold text-red-600 mb-10 text-center drop-shadow-md">
+        Donor Dashboard
+      </h1>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading donors...</p>
+        <p className="text-center text-gray-500 text-lg">Loading donors...</p>
       ) : donors.length === 0 ? (
-        <p className="text-center text-gray-600">No donors found.</p>
+        <p className="text-center text-gray-600 text-lg">No donors found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300 rounded-md bg-white shadow">
-            <thead className="bg-red-600 text-white">
-              <tr>
-                <th className="py-3 px-6 text-left">Name</th>
-                <th className="py-3 px-6 text-left">Blood Group</th>
-                <th className="py-3 px-6 text-left">Upazila</th>
-                <th className="py-3 px-6 text-left">Village</th>
-                <th className="py-3 px-6 text-left">Last Donation</th>
-                <th className="py-3 px-6 text-left">Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {donors.map(({ id, name, bloodGroup, upazila, village, donationDate, phone }) => (
-                <tr key={id} className="border-b border-gray-200 hover:bg-gray-100 transition">
-                  <td className="py-3 px-6">{name}</td>
-                  <td className="py-3 px-6">{bloodGroup}</td>
-                  <td className="py-3 px-6">{upazila}</td>
-                  <td className="py-3 px-6">{village}</td>
-                  <td className="py-3 px-6">
-                    {donationDate
-                      ? new Date(donationDate).toLocaleDateString()
-                      : "N/A"}
-                  </td>
-                  <td className="py-3 px-6">{phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {donors.map((donor) => (
+            <div
+              key={donor.id}
+              className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-gray-800">{donor.name}</h2>
+                <span className="text-red-600 font-semibold text-lg flex items-center gap-1">
+                  <FaTint className="text-red-500" />
+                  {donor.bloodGroup}
+                </span>
+              </div>
+              <div className="space-y-2 text-gray-600 text-sm">
+                <p className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-red-400" />
+                  <strong>Upazila:</strong> {donor.upazila}
+                </p>
+                <p className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-red-400" />
+                  <strong>Village:</strong> {donor.village}
+                </p>
+                <p className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-red-400" />
+                  <strong>Last Donation:</strong>{" "}
+                  {donor.donationDate
+                    ? new Date(donor.donationDate).toLocaleDateString()
+                    : "N/A"}
+                </p>
+                <p className="flex items-center gap-2">
+                  <FaPhoneAlt className="text-red-400" />
+                  <strong>Phone:</strong> {donor.phone}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
