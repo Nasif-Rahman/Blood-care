@@ -95,9 +95,10 @@ const SearchDonor = () => {
   };
 
   return (
-    <div className="section max-w-5xl mx-auto p-6">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white py-10 px-4">
+    <div className="section max-w-5xl mx-auto p-6 ">
       <div className="bg-white shadow-xl rounded-lg p-6 border border-red-200">
-        <h2 className="text-3xl font-bold text-center text-red-600 mb-8">
+        <h2 className="text-3xl font-bold text-center text-red-600 mb-8 drop-shadow-md">
           Search Donors
         </h2>
 
@@ -157,6 +158,7 @@ const SearchDonor = () => {
           )
         )}
       </div>
+    </div>
     </div>
   );
 };

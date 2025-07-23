@@ -147,7 +147,7 @@ const AdminLogin = () => {
       </div>
 
       {/* Add Donor Form */}
-      <div className="mb-6 bg-gray-100 p-4 rounded-lg">
+      <div className="mb-6 bg-white border p-4 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Add Donor</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <input name="name" placeholder="Name" value={formData.name} onChange={handleFormChange} className="border p-2 rounded" />

@@ -35,7 +35,8 @@ const RegisterDonor = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className='min-h-screen bg-gradient-to-b from-red-50 to-white py-10 px-4'>
+    <div className="min-h-screen flex items-center justify-center  p-4">
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-red-600 text-center">Become a Donor</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -105,6 +106,7 @@ const RegisterDonor = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };
