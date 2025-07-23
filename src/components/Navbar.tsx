@@ -19,7 +19,7 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-red-200 shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="text-2xl font-bold text-red-600 select-none">
           BloodCare
@@ -32,7 +32,7 @@ const Navbar = () => {
               key={path}
               to={path}
               className={`font-medium hover:text-red-600 transition ${
-                isActive(path) ? 'text-red-600' : 'text-gray-800'
+                isActive(path) ? 'text-red-600' : 'text-black'
               }`}
             >
               {label}

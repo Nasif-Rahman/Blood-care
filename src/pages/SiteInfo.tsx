@@ -2,7 +2,8 @@
 
 const SiteInfo = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white py-10 px-4">
+    <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800 ">
       <h1 className="text-3xl font-bold text-red-600 mb-6 text-center">সাইট সম্পর্কে তথ্য</h1>
       <div className="space-y-6 text-lg leading-relaxed bg-white p-6 rounded-lg shadow">
 
@@ -72,6 +73,7 @@ const SiteInfo = () => {
 
 
       </div>
+    </div>
     </div>
   );
 };
