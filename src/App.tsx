@@ -3,8 +3,10 @@ import Home from './pages/Home';
 import RegisterDonor from './pages/RegisterDonor';
 import SearchDonor from './pages/SearchDonor';
 import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
+// import Login from './pages/Login'; 
 import Navbar from './components/Navbar';
+import AdminLogin from './pages/AdminLogin';
+import AdminDonorCard from './components/AdminDonorCard';
 
 function App() {
   return (
@@ -15,7 +17,26 @@ function App() {
         <Route path="/register" element={<RegisterDonor />} />
         <Route path="/search" element={<SearchDonor />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin/donor-card"
+          element={
+            <AdminDonorCard
+              donor={{
+                id: "",
+                name: "",
+                bloodGroup: "",
+                upazila: "",
+                village: "",
+                phone: "",
+                donationDate: ""
+              }}
+              onEdit={() => { /* provide edit handler here */ }}
+              onDelete={() => { /* provide delete handler here */ }}
+            />
+          }
+        />
       </Routes>
     </div>
   );

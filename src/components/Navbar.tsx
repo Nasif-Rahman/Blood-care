@@ -6,7 +6,8 @@ const navLinks = [
   { path: '/register', label: 'Register' },
   { path: '/search', label: 'Search Donors' },
   { path: '/dashboard', label: 'Dashboard' },
-  { path: '/login', label: 'Login' },
+  
+  { path: '/admin/login', label: 'Admin' }, // ✅ Admin Panel link
 ];
 
 const Navbar = () => {
@@ -44,7 +45,6 @@ const Navbar = () => {
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? (
-            // X icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-red-600"
@@ -56,7 +56,6 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            // Hamburger icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-red-600"
