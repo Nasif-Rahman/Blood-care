@@ -6,6 +6,8 @@ const navLinks = [
   { path: '/register', label: 'Register' },
   { path: '/search', label: 'Search Donors' },
   { path: '/dashboard', label: 'Dashboard' },
+  { path: '/site-info', label: 'Site Info' },
+
   
   { path: '/admin/login', label: 'Admin' }, // ✅ Admin Panel link
 ];

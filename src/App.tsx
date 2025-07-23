@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
 import AdminLogin from './pages/AdminLogin';
 import AdminDonorCard from './components/AdminDonorCard';
+import SiteInfo from './pages/SiteInfo';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/site-info" element={<SiteInfo />} />
         <Route
           path="/admin/donor-card"
           element={
